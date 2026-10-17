@@ -70,6 +70,10 @@
   .links a:hover{border-color:var(--accent);text-decoration:none}
   .links svg{width:16px;height:16px;fill:currentColor}
 
+  .demo{margin:4px 0 20px}
+  .demo video{display:block;width:100%;aspect-ratio:960/556;border-radius:14px;border:1px solid var(--line);background:#000}
+  .demo figcaption{margin:8px 2px 0;font-size:13.5px;color:var(--muted)}
+
   section{padding:22px 0;border-top:1px solid var(--line)}
   h2{font-size:14px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 12px}
   .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
@@ -129,12 +133,20 @@
         <a href="https://orcid.org/0009-0006-1595-8379" rel="noopener"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zM8.4 16.5H7.1V8.6h1.3zM7.75 7.6a.85.85 0 1 1 0-1.7.85.85 0 0 1 0 1.7zM13 16.5H9.9V8.6H13c2.6 0 4.1 1.7 4.1 3.95S15.6 16.5 13 16.5zm-.1-6.75h-1.7v5.6h1.7c1.9 0 2.9-1.1 2.9-2.8s-1-2.8-2.9-2.8z"/></svg>ORCID</a>
         <a href="https://x.com/koyosasazaki" rel="noopener"><svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 4.5 16.8l-1-1.7A7 7 0 1 1 19 12v1a1.5 1.5 0 0 1-3 0v-1a4 4 0 1 0-1.2 2.9A3.5 3.5 0 0 0 21 13v-1a9 9 0 0 0-9-9zm0 11a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/></svg>X</a>
         <a href="https://www.linkedin.com/in/koyosasazaki/" rel="noopener"><svg viewBox="0 0 24 24"><path d="M9 4h6a2 2 0 0 1 2 2v1h3a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h3V6a2 2 0 0 1 2-2zm0 3h6V6H9v1z"/></svg>LinkedIn</a>
+        <a href="assets/cv_koyo_sasazaki.pdf"><svg viewBox="0 0 24 24"><path d="M6 2h8l5 5v15H6zm7 1.5V8h4.5zM8 11h8v1.5H8zm0 3h8v1.5H8zm0 3h5v1.5H8z"/></svg>CV</a>
         <!-- Google Scholar は PACT が Scholar に載ってプロフィールを作ったら、下の行のコメントを外して URL を入れる
         <a href="https://scholar.google.com/citations?user=XXXX" rel="noopener">Google Scholar</a>
         -->
       </div>
     </div>
   </div>
+
+  <figure class="demo">
+    <video src="assets/pact_teleop_loop.mp4" poster="assets/pact_teleop_poster.jpg" autoplay muted loop playsinline preload="metadata"
+           aria-label="The PACT Hand mirroring an operator's hand postures in real time"></video>
+    <figcaption class="en">Live teleoperation: the PACT Hand (left) follows the operator's hand (right) from a single RGB camera, using the same retargeting law that served as its design objective.</figcaption>
+    <figcaption class="ja">テレオペレーションの様子：PACT Hand（左）が、1台の RGB カメラで捉えた操作者の手（右）の姿勢を、設計時の目的関数と同じリターゲティング則で追従しています。</figcaption>
+  </figure>
 
   <section id="about">
     <h2 class="en">About</h2><h2 class="ja">自己紹介</h2>
@@ -214,6 +226,14 @@
       p.classList.toggle('open',open); b.setAttribute('aria-expanded',String(open));
     });
   });
+  // 動きを減らす設定のブラウザでは自動再生せず、クリックで再生/停止
+  var v=document.querySelector('.demo video');
+  if(v){
+    try{
+      if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches){v.removeAttribute('autoplay');v.pause();v.setAttribute('controls','');}
+    }catch(e){}
+    v.addEventListener('click',function(){ if(v.paused){v.play();}else{v.pause();} });
+  }
 })();
 </script>
 </body>
